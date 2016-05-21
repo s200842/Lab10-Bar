@@ -69,7 +69,9 @@ public class Core {
 			//Se però occupano meno del 50% li invito ad andare al bancone
 			Group g = groups.get(e.getId());
 			System.out.println("[T = "+e.getTime()+"] Arrivato gruppo "+g.getIdGroup()+" ("+g.getPeople()+" persone)");
-			nCustomers++;
+			for (int i=0; i<g.getPeople(); i++){
+				nCustomers++;
+			}
 			//Cerco il tavolo libero più piccolo
 			for(Table t : tables.values()){
 				//Se il tavolo attuale è libero e il gruppo non è ancora seduto
@@ -82,20 +84,26 @@ public class Core {
 						g.setTable(t);
 						System.out.println("[T = "+e.getTime()+"] Gruppo "+g.getIdGroup()+" seduto al tavolo "+t.getId_table()+" ("+t.getCapacity()+" posti)");
 						this.addEvent(new Event(e.getTime()+g.getDuration(), EventType.GROUP_LEAVES, g.getIdGroup()));
-						nSatisfied++;
+						for (int i=0; i<g.getPeople(); i++){
+							nSatisfied++;
+						}
 					}
 				}
 			}
 			//Se dopo aver controllato tutti i tavoli non ne ho trovato nessuno per il gruppo provo a farli andare al bancone
 			if(g.getState() == GroupState.GROUP_WAITING){
 				if(g.getTolerance()<=ThreadLocalRandom.current().nextDouble()){
-					nSatisfied++;
+					for (int i=0; i<g.getPeople(); i++){
+						nSatisfied++;
+					}
 					g.setState(GroupState.GROUP_GONE);
 					System.out.println("[T = "+e.getTime()+"] Gruppo "+g.getIdGroup()+" servito al bancone");
 				}
 				else{
 					g.setState(GroupState.GROUP_GONE);
-					nUnsatisfied++;
+					for (int i=0; i<g.getPeople(); i++){
+						nUnsatisfied++;
+					}
 					System.out.println("[T = "+e.getTime()+"] Gruppo "+g.getIdGroup()+" esce senza aspettare");
 				}
 			}
