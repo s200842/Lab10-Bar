@@ -32,6 +32,8 @@ public class BarController {
     @FXML
     void doStart(ActionEvent event) {
     	m.simulate();
+    	txtResult.setText(String.format("Clienti ricevuti: %d\nClienti soddisfatti: %d\nClienti insoddisfatti: %d", m.getStat().getCustomers(), m.getStat().getSatisfied(), m.getStat().getUnsatisfied()));
+    	return;
     }
 
     @FXML

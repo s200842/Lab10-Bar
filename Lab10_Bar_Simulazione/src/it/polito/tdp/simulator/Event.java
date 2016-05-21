@@ -2,7 +2,7 @@ package it.polito.tdp.simulator;
 
 public class Event implements Comparable<Event>{
 	
-	public enum EventType {GROUP_ARRIVES };
+	public enum EventType {GROUP_ARRIVES, GROUP_LEAVES };
 	
 	private long time;
 	private EventType type;
